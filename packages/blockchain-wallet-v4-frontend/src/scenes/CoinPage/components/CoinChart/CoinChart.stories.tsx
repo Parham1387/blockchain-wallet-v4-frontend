@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import moment from 'moment'
 
 import { CoinChart, CoinChartComponent } from '.'
-import { serie_ascending_1, serie_descending_1 } from './mocks'
+import { liveDataCopy, serie_ascending_1, serie_descending_1 } from './mocks'
 
 const coinChartStory: ComponentMeta<CoinChartComponent> = {
   argTypes: {
@@ -13,6 +13,9 @@ const coinChartStory: ComponentMeta<CoinChartComponent> = {
     },
     data: {
       defaultValue: serie_ascending_1
+    },
+    numTicks: {
+      defaultValue: 6
     },
     primaryColor: {
       control: { type: 'color' },
@@ -68,5 +71,18 @@ AscendingDark.args = {
   primaryColor: '#0C6CF2',
   textColor: '#98a1b2'
 }
+
+export const LiveCopy: ComponentStory<CoinChartComponent> = ({ ...args }) => (
+  <div style={{ height: 300, width: 600 }}>
+    <CoinChart
+      {...args}
+      data={liveDataCopy.map(([date, value]) => ({ date, value }))}
+      x='date'
+      y='value'
+      xFormatter={(date) => moment(date).format('hh:mm A')}
+      yFormatter={(value) => value.toString()}
+    />
+  </div>
+)
 
 export default coinChartStory
